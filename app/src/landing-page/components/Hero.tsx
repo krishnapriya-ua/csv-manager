@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { getCsvFiles,uploadCsvFile } from 'wasp/client/operations';
 import { useQuery,useAction } from 'wasp/client/operations';
+import FieldMappingModal from '../../csv-management/FieldMappingModal';
 
 
 export default function Hero() {
@@ -14,6 +15,15 @@ export default function Hero() {
   const [isUploading, setIsUploading] = useState(false);
   const { data: csvFiles, refetch } = useQuery(getCsvFiles);
   const doUploadCsv = useAction(uploadCsvFile);
+
+  const [pendingFile, setPendingFile] = useState<{
+    headers: string[];
+    rows: { rowData: any; rowIndex: number }[];
+    fileMeta: { originalName: string; fileName: string };
+  } | null>(null);
+  
+  const systemFields = ['Country Name', 'Country Code', 'Region', 'Alpha-2' , 'ISO Code'];
+  
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (!user) {
@@ -33,20 +43,14 @@ export default function Hero() {
       });
 
       // 2️⃣ build payload
-      const args = {
-        fileName     : file.name.replace(/\.csv$/i, '') + '-' + Date.now(),
-        originalName : file.name,
-        columnHeaders: parsed.meta.fields ?? [],
-        rowCount     : parsed.data.length,
-        rows         : parsed.data.map((row, idx) => ({
-          rowData : row,
-          rowIndex: idx
-        }))
-      };
-
-      // 3️⃣ call action
-      await doUploadCsv(args);
-      await refetch();
+      setPendingFile({
+        headers: parsed.meta.fields ?? [],
+        rows: parsed.data.map((row, idx) => ({ rowData: row, rowIndex: idx })),
+        fileMeta: {
+          originalName: file.name,
+          fileName: file.name.replace(/\.csv$/i, '') + '-' + Date.now()
+        }
+      });
     } catch (error) {
       console.error('Error uploading file  :', error);
     } finally {
@@ -74,6 +78,40 @@ export default function Hero() {
     }
   };
 
+  const handleMappingDone = async (mapping: Record<string, string>) => {
+    if (!pendingFile) return;
+  
+    // transform headers according to mapping
+    const mappedHeaders = systemFields.map((field) => {
+      const csvHeader = Object.keys(mapping).find((key) => mapping[key] === field);
+      return csvHeader || ''; // Empty string or you can throw error if not found
+    });
+
+    const mappedRows = pendingFile.rows.map(({ rowData, rowIndex }) => {
+      const reducedRow: Record<string, any> = {};
+      systemFields.forEach((field) => {
+        const csvField = Object.keys(mapping).find((key) => mapping[key] === field);
+        if (csvField) {
+          reducedRow[field] = rowData[csvField];
+        }
+      });
+      return { rowData: reducedRow, rowIndex };
+    });
+    
+  
+    // optionally transform rows as well (kept the same here)
+    await doUploadCsv({
+      ...pendingFile.fileMeta,
+      columnHeaders: systemFields,
+      rowCount: mappedRows.length,
+      rows: mappedRows
+    });
+    
+  
+    setPendingFile(null);
+    await refetch();
+  };
+  
   
 
   return (
@@ -148,7 +186,7 @@ export default function Hero() {
                 {f.rowCount} rows • {new Date(f.uploadedAt).toLocaleString()}
               </p>
               <button
-                onClick={() => navigate(`/csv/${f.id}`)}
+                onClick={() => navigate(`/csv/${f.id.toString()}`)}
                 className='mt-3 text-sm text-blue-600 hover:text-blue-800 flex items-center'
               >
                 View More
@@ -161,6 +199,14 @@ export default function Hero() {
          </ul>
         : <p className='text-gray-500'>No CSVs imported yet.</p>}
         </section>
+        {pendingFile && (
+  <FieldMappingModal
+    csvHeaders={pendingFile.headers}
+    systemFields={systemFields}
+    onCancel={() => setPendingFile(null)}
+    onFinish={handleMappingDone}
+  />
+)}
 
       </div>
     </div>

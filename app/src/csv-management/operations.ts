@@ -1,5 +1,6 @@
-import { type CsvFile } from 'wasp/entities';
+import { type CsvFile, type CsvRow  } from 'wasp/entities';
 import { type GetCsvFiles, type UploadCsvFile } from 'wasp/server/operations';
+import { type GetCsvFileById } from 'wasp/server/operations';
 
 export const getCsvFiles: GetCsvFiles<void, CsvFile[]> = async (_args, context) => {
   if (!context.user) {
@@ -47,3 +48,22 @@ export const uploadCsvFile: UploadCsvFile<UploadCsvFileArgs, CsvFile> = async (a
 
   return csvFile;
 }; 
+
+type GetCsvFileByIdArgs = { id: string };
+
+export const getCsvFileById: GetCsvFileById<GetCsvFileByIdArgs, CsvFile & { rows: CsvRow[] }> = async ({ id }, context) => {
+  if (!context.user) {
+    throw new Error('Not authorized');
+  }
+
+  const file = await context.entities.CsvFile.findUniqueOrThrow({
+    where: { id },
+    include: {
+      rows: {
+        orderBy: { rowIndex: 'asc' }
+      }
+    }
+  });
+
+  return file;
+};

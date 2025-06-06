@@ -97,6 +97,10 @@ app OpenSaaS {
 
 route CsvManagementRoute { path: "/csv-management", to: LandingPage }
 route LandingPageRoute { path: "/", to: RedirectPage }
+route CSVDetailsPage {path: "/csv/:id",to:CsvDetailsRoute}
+page CsvDetailsRoute {
+  component : import CSVDetail from "@src/csv-management/CsvDetail"
+}
 
 page RedirectPage {
   component: import RedirectPage from "@src/landing-page/RedirectPage"
@@ -342,6 +346,11 @@ query getCsvFiles {
 action uploadCsvFile {
   fn: import { uploadCsvFile } from "@src/csv-management/operations",
   entities: [User, CsvFile, CsvRow]
+}
+
+query getCsvFileById {
+  fn: import { getCsvFileById } from "@src/csv-management/operations",
+  entities: [CsvFile, CsvRow]
 }
 
 //#endregion
