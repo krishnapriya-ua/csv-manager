@@ -21,7 +21,7 @@ export default function Hero() {
       // TODO: Implement file upload action
       console.log('File to upload:', file);
     } catch (error) {
-      console.error('Error uploading file:', error);
+      console.error('Error uploading file  :', error);
     } finally {
       setIsUploading(false);
     }
