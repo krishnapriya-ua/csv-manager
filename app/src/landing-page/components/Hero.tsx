@@ -1,13 +1,19 @@
+import Papa from 'papaparse'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'wasp/client/auth';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { getCsvFiles,uploadCsvFile } from 'wasp/client/operations';
+import { useQuery,useAction } from 'wasp/client/operations';
+
 
 export default function Hero() {
   const navigate = useNavigate();
   const { data: user } = useAuth();
   const [isDragActive, setIsDragActive] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const { data: csvFiles, refetch } = useQuery(getCsvFiles);
+  const doUploadCsv = useAction(uploadCsvFile);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (!user) {
@@ -20,12 +26,33 @@ export default function Hero() {
       const file = acceptedFiles[0]; // Handle one file at a time
       // TODO: Implement file upload action
       console.log('File to upload:', file);
+       const text = await file.text();
+      const parsed = Papa.parse<Record<string, string>>(text, {
+        header: true,
+        skipEmptyLines: true
+      });
+
+      // 2️⃣ build payload
+      const args = {
+        fileName     : file.name.replace(/\.csv$/i, '') + '-' + Date.now(),
+        originalName : file.name,
+        columnHeaders: parsed.meta.fields ?? [],
+        rowCount     : parsed.data.length,
+        rows         : parsed.data.map((row, idx) => ({
+          rowData : row,
+          rowIndex: idx
+        }))
+      };
+
+      // 3️⃣ call action
+      await doUploadCsv(args);
+      await refetch();
     } catch (error) {
       console.error('Error uploading file  :', error);
     } finally {
       setIsUploading(false);
     }
-  }, [user, navigate]);
+  }, [user, navigate,doUploadCsv,refetch]);
 
   const { getRootProps, getInputProps, open } = useDropzone({
     onDrop,
@@ -46,6 +73,8 @@ export default function Hero() {
       open(); // Manually trigger file dialog
     }
   };
+
+  
 
   return (
     <div className='min-h-screen bg-gray-50'>
@@ -107,6 +136,32 @@ export default function Hero() {
             </div>
           </div>
         </div>
+
+        <section className='mt-16'>
+        <h4 className='text-lg font-semibold mb-4'>Imported CSVs</h4>
+        {csvFiles?.length
+        ? <ul className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+          {csvFiles.map(f => (
+            <li key={f.id} className='p-4 bg-white shadow rounded hover:shadow-md transition-shadow'>
+              <p className='font-medium'>{f.originalName}</p>
+              <p className='text-sm text-gray-500'>
+                {f.rowCount} rows • {new Date(f.uploadedAt).toLocaleString()}
+              </p>
+              <button
+                onClick={() => navigate(`/csv/${f.id}`)}
+                className='mt-3 text-sm text-blue-600 hover:text-blue-800 flex items-center'
+              >
+                View More
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </li>
+          ))}
+         </ul>
+        : <p className='text-gray-500'>No CSVs imported yet.</p>}
+        </section>
+
       </div>
     </div>
   );

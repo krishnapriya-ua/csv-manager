@@ -3,7 +3,7 @@ app OpenSaaS {
     version: "^0.16.0"
   },
 
-  title: "My Open SaaS App",
+  title: "CSV Manager",
 
   head: [
     "<meta charset='utf-8' />",
@@ -343,5 +343,6 @@ action uploadCsvFile {
   fn: import { uploadCsvFile } from "@src/csv-management/operations",
   entities: [User, CsvFile, CsvRow]
 }
+
 //#endregion
  
