@@ -16,20 +16,24 @@ You can also edit individual cell values directly in the UI
 
 Getting Started
 --------------
-To run the CSV Manager App locally, follow these steps:
+* To run the CSV Manager App locally, follow these steps:
 
-git clone https://github.com/krishnapriya-ua/csv-manager 
+ git clone https://github.com/krishnapriya-ua/csv-manager 
 
-cd csv-management/app
+ cd csv-management/app
 
-Install dependencies
+* Install dependencies
+  
 npm install
 
-Start the app
+* Start the app
+* 
 wasp start
 
-Start the PostgreSQL database using Docker
+* Start the PostgreSQL database using Docker
+  
 wasp start db
+
 Make sure Docker is installed and running before starting the database.
 
 
