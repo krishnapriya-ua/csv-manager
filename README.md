@@ -14,4 +14,24 @@ Upload CSV files and view detailed contents of your CSV files in a clean, organi
 You can also edit individual cell values directly in the UI
 
 
+Getting Started
+--------------
+To run the CSV Manager App locally, follow these steps:
+
+git clone <your-repo-url>
+cd <repo-folder>/app
+
+Install dependencies
+npm install
+
+Start the app
+wasp start
+
+Start the PostgreSQL database using Docker
+wasp start db
+Make sure Docker is installed and running before starting the database.
+
+
+
+
 For more details, check READMEs of each respective directory!
