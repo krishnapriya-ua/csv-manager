@@ -1,40 +1,64 @@
-# <CSV MANAGER>
+# 📊 CSV Manager App
 
-Welcome to CSV Manager App, a powerful web application designed to help you effortlessly manage your CSV files.
+This is a **CSV Management Web App** built using the [Wasp](https://wasp-lang.dev) open-source full-stack framework. The frontend is built with **React**, backend with **Node.js**, and **PostgreSQL** is used as the database.
 
-* This project is built using the OpenSaaS framework, featuring:
+The application allows users to:
+- Upload CSV files
+- View CSV data in a table
+- Edit individual cell values with inline editing
+- Save updates securely to the database
 
-* React on the frontend for a fast, dynamic user experience
+---
 
-* Node.js on the backend powering the API and business logic
+## 🚀 Tech Stack
 
-With CSV Manager App, you can:
+- **Framework**: [Wasp](https://wasp-lang.dev/)
+- **Frontend**: React, Tailwind CSS
+- **Backend**: Node.js, Prisma ORM
+- **Database**: PostgreSQL
+- **Auth**: Wasp built-in authentication
+- **Deployment**: Docker (for database)
 
-Upload CSV files and view detailed contents of your CSV files in a clean, organized table.
-You can also edit individual cell values directly in the UI
+---
 
+## 🛠️ Features
 
-Getting Started
---------------
-* To run the CSV Manager App locally, follow these steps:
+- Upload any structured CSV file
+- View CSV data with proper formatting
+- Inline editing for individual cell values
+- Save edits securely to the backend
+- User authentication to protect user data
+- Clean UI with hover, focus, and editable states
 
- git clone https://github.com/krishnapriya-ua/csv-manager 
+---
 
- cd csv-management/app
+## 🖥️ Demo Video
 
-* Install dependencies
+Watch the full demo (3–5 mins) here:  
+[📹 Demo Video Link](https://your-demo-video-link.com) <!-- Replace this with your YouTube or Google Drive video link -->
+
+---
+
+## 📦 Setup Instructions
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/krishnapriya-ua/csv-manager.git
+cd csv-manager-app
+Install dependencies
   
-npm install
+ * npm install
 
-* Start the app
-* 
-wasp start
+Start the app
 
-* Start the PostgreSQL database using Docker
+* wasp start
+
+Start the PostgreSQL database using Docker
   
-wasp start db
+* wasp start db
 
-Make sure Docker is installed and running before starting the database.
+* Make sure Docker is installed and running before starting the database.
+
 
 
 
