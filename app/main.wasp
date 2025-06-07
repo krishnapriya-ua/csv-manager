@@ -353,5 +353,11 @@ query getCsvFileById {
   entities: [CsvFile, CsvRow]
 }
 
+action updateCsvCell {
+  fn: import { updateCsvCell } from "@src/csv-management/operations",
+  entities: [CsvRow]
+}
+
+
 //#endregion
  

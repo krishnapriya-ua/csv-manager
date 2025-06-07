@@ -200,14 +200,13 @@ export default function Hero() {
         : <p className='text-gray-500'>No CSVs imported yet.</p>}
         </section>
         {pendingFile && (
-  <FieldMappingModal
-    csvHeaders={pendingFile.headers}
-    systemFields={systemFields}
-    onCancel={() => setPendingFile(null)}
-    onFinish={handleMappingDone}
-  />
-)}
-
+       <FieldMappingModal
+        csvHeaders={pendingFile.headers}
+        systemFields={systemFields}
+        onCancel={() => setPendingFile(null)}
+        onFinish={handleMappingDone}
+        />
+      )}
       </div>
     </div>
   );
