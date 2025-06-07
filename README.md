@@ -1,4 +1,4 @@
-# 📊 CSV Manager App
+#  CSV Manager 
 
 This is a **CSV Management Web App** built using the [Wasp](https://wasp-lang.dev) open-source full-stack framework. The frontend is built with **React**, backend with **Node.js**, and **PostgreSQL** is used as the database.
 
@@ -21,16 +21,6 @@ The application allows users to:
 
 ---
 
-## 🛠️ Features
-
-- Upload any structured CSV file
-- View CSV data with proper formatting
-- Inline editing for individual cell values
-- Save edits securely to the backend
-- User authentication to protect user data
-- Clean UI with hover, focus, and editable states
-
----
 
 ## 🖥️ Demo Video
 
@@ -64,6 +54,8 @@ Start the PostgreSQL database using Docker
 ##🤖 **Cursor AI Chat History**
 
 You can find the full chat history on the folder in github called  -**cursor-ai-chat-history**
+
+Also find technical documentaion in technical-approach.md file
 
 
 For more details, check READMEs of each respective directory!
