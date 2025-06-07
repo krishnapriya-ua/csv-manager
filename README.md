@@ -1,6 +1,10 @@
 #  CSV Manager 
 
+Watch the full demo here:  
+https://www.loom.com/share/72ebf1dc64514751a5634c5e9f146b4a
+
 This is a **CSV Management Web App** built using the [Wasp](https://wasp-lang.dev) open-source full-stack framework. The frontend is built with **React**, backend with **Node.js**, and **PostgreSQL** is used as the database.
+
 
 The application allows users to:
 - Upload CSV files
@@ -22,12 +26,6 @@ The application allows users to:
 ---
 
 
-## 🖥️ Demo Video
-
-Watch the full demo (3–5 mins) here:  
-[📹 Demo Video Link](https://your-demo-video-link.com) <!-- Replace this with your YouTube or Google Drive video link -->
-
----
 
 ## 📦 Setup Instructions
 
