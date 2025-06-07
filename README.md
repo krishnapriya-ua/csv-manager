@@ -59,8 +59,11 @@ Start the PostgreSQL database using Docker
 
 * Make sure Docker is installed and running before starting the database.
 
+----
 
+##🤖 **Cursor AI Chat History**
 
+You can find the full chat history on the folder in github called  -**cursor-ai-chat-history**
 
 
 For more details, check READMEs of each respective directory!
