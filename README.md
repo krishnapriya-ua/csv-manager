@@ -19,6 +19,7 @@ Getting Started
 To run the CSV Manager App locally, follow these steps:
 
 git clone https://github.com/krishnapriya-ua/csv-manager 
+
 cd csv-management/app
 
 Install dependencies
