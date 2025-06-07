@@ -53,8 +53,4 @@ This project is a **CSV Manager App** built using the **Wasp full-stack framewor
 The complete Cursor AI chat history has been exported and added in the folder:  
 📁 `cursor-ai-chat-history/`
 
-It includes all technical discussions, solutions, errors, and iterative improvements made during the development process.
 
----
-
-**Total Word Count**: ~475
