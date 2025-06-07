@@ -1,8 +1,25 @@
-# <YOUR_APP_NAME>
+# <CSV MANAGER>
 
-This project is based on [OpenSaas](https://opensaas.sh) template and consists of three main dirs:
-1. `app` - Your web app, built with [Wasp](https://wasp.sh).
-2. `e2e-tests` - [Playwright](https://playwright.dev/) tests for your Wasp web app.
-3. `blog` - Your blog / docs, built with [Astro](https://docs.astro.build) based on [Starlight](https://starlight.astro.build/) template.
+Welcome to CSV Manager App, a powerful web application designed to help you effortlessly manage your CSV files.
 
+This project is built using the OpenSaaS framework, featuring:
+
+React on the frontend for a fast, dynamic user experience
+
+Node.js on the backend powering the API and business logic
+
+PostgreSQL as the reliable, robust database
+
+What It Does
+With CSV Manager App, you can:
+
+Upload CSV files
+
+View detailed contents of your CSV files in a clean, organized table
+
+Edit individual cell values directly in the UI
+
+Save your edits back to the database for persistent updates
+
+All these features come together to make CSV data management smooth, intuitive, and efficient.
 For more details, check READMEs of each respective directory!
